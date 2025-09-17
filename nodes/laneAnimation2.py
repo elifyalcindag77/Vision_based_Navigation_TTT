@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python3
 import cv2
 import numpy as np
@@ -31,7 +32,7 @@ def draw_curved_dash_line(overlay, h, w, base_x, base_y, vp_x, vp_y, sway,
         cv2.line(overlay, (x0, y0), (x1, y1), color, thickness)
 
 def main():
-    cap = cv2.VideoCapture(2)  # <-- /dev/video5
+    cap = cv2.VideoCapture(0)  # <-- /dev/video5
     if not cap.isOpened():
         print("Error: Could not open camera at /dev/video5")
         return

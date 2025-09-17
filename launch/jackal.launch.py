@@ -8,8 +8,8 @@ from launch_ros.parameter_descriptions import ParameterValue
 
 def generate_launch_description():
     declared_args = [
-        DeclareLaunchArgument('x', default_value='-15'),
-        DeclareLaunchArgument('y', default_value='-4'),
+        DeclareLaunchArgument('x', default_value='-10'),
+        DeclareLaunchArgument('y', default_value='-4.5'),
         DeclareLaunchArgument('z', default_value='0'),
         DeclareLaunchArgument('yaw', default_value='0'),
     ]
@@ -17,7 +17,7 @@ def generate_launch_description():
     pkg_share = FindPackageShare('vision_based_navigation_ttt')
     xacro_path = PathJoinSubstitution([pkg_share, 'urdf', 'jackal_gazebo.urdf.xacro'])
     #yaml_file = PathJoinSubstitution([pkg_share, 'config', 'control.yaml'])
-    world_path = PathJoinSubstitution([pkg_share, 'GazeboWorlds', 'corridor_2.world'])
+    world_path = PathJoinSubstitution([pkg_share, 'GazeboWorlds', 'corridor.world'])
 
     robot_description = ParameterValue(
         Command(['xacro ', xacro_path]),
@@ -95,7 +95,7 @@ def generate_launch_description():
     )
 
     optical_flow_node = Node(
-        package='vision_based_navigation_ttt',
+        package='mobilenettt_visionnavigation',
         executable='optical_flow.py',
         name='optical_flow',
         arguments=['1'],
@@ -104,7 +104,7 @@ def generate_launch_description():
     )
 
     tau_node = Node(
-        package='vision_based_navigation_ttt',
+        package='mobilenettt_visionnavigation',
         executable='tau_computation.py',
         name='tau_computation',
         parameters=[{'image_sub_name': '/camera/image'}, {'use_sim_time': True}],
@@ -112,10 +112,18 @@ def generate_launch_description():
     )
 
     controller_node = Node(
-        package='vision_based_navigation_ttt',
+        package='mobilenettt_visionnavigation',
         executable='controller.py',
         name='controller',
         parameters=[{'use_sim_time': True}],
+        output='screen'
+    )
+    
+    bezier_optical_flow_node = Node(
+        package='mobilenettt_visionnavigation',
+        executable='bezier_optical_flow.py',
+        name='bezier_optical_flow',
+        parameters=[{'image_sub_name': '/dev/video0'}, {'use_sim_time': True}],
         output='screen'
     )
 
@@ -127,7 +135,8 @@ def generate_launch_description():
         load_jsb,
         load_diffdrive,
         bridge,
-        optical_flow_node,
-        tau_node,
-        controller_node,
+        #optical_flow_node,
+        #tau_node,
+        #controller_node,
+        bezier_optical_flow_node
     ])

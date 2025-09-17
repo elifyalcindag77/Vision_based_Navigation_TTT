@@ -49,7 +49,9 @@ install(PROGRAMS
   nodes/controller.py
   nodes/tau_computation.py
   nodes/road_marker.py 
+  nodes/bezier_optical_flow.py 
   DESTINATION lib/${PROJECT_NAME}
+  
 )
 
 if(BUILD_TESTING)
