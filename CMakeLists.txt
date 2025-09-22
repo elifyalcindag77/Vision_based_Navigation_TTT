@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(mobilenettt_visionnavigation)
+project(vision_based_navigation_ttt)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -48,10 +48,7 @@ install(PROGRAMS
   nodes/optical_flow.py
   nodes/controller.py
   nodes/tau_computation.py
-  nodes/road_marker.py 
-  nodes/bezier_optical_flow.py 
   DESTINATION lib/${PROJECT_NAME}
-  
 )
 
 if(BUILD_TESTING)
@@ -65,5 +62,10 @@ if(BUILD_TESTING)
   set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
+
+install(PROGRAMS
+  scripts/move_capsule.py
+  DESTINATION lib/${PROJECT_NAME}
+)
 
 ament_package()
