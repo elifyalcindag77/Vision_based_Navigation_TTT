@@ -65,6 +65,7 @@ endif()
 
 install(PROGRAMS
   scripts/move_capsule.py
+  scripts/ttt_dynamic_avoid_controller.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
